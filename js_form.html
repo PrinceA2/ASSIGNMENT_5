@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script src="jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            var rowdata;
+            $("#ebutton").click(function(event){
+                event.preventDefault(); // Prevent form submission
+                
+// Retrieve values from form fields
+
+                var eid = parseInt($("#eid").val());
+                var ename = $("#ename").val();
+                var esalary = $("#esalary").val();
+                var eage = $("#eage").val();
+                var eurl = $("#eurl").val();
+
+// Append the new record to the table
+
+                $("table tbody").append("<tr>" +
+                    "<td>"+eid+"</td>" +
+                    "<td><img src='" + eurl + "' alt='employee image' width='50px'></td>" +
+                    "<td>" + ename + "</td>" +
+                    "<td>" + esalary + "</td>" +
+                    "<td>" + eage + "</td>" +
+                    "<td><button class = 'edt'>Edit</button>&nbsp;<button class = 'del'>Delete</button></td>" +
+                    "</tr>");
+            });
+       
+// ------------------Delete Button Functionality----------------//
+
+            $("table").on("click", ".del", function() {
+            $(this).closest("tr").remove();
+            console.log("THis is right")
+        });
+
+// -------------------Edit Button Functionality-----------------//
+
+        $("table").on("click", ".edt", function()
+        {
+
+// finding the tr index to be edited //
+
+            var trindex = $("tr").index($(this).closest("tr"));
+            // console.log(trindex);
+            rowdata = $("table tr:nth-child(" + (trindex + 1) + ")");
+                        
+        //    console.log(rowdata.find("td:nth-child(4)").html());
+        console.log(rowdata.html());
+
+//-------------Transferring the row data to the text boxes---------//
+
+           let st_id = rowdata.find("td:nth-child(1)").html();
+           $('#eid').val(st_id);
+           let st_name = rowdata.find("td:nth-child(3)").html();
+           $('#ename').val(st_name);
+           let st_salary = rowdata.find("td:nth-child(4)").html();
+           $('#esalary').val(st_salary);
+           let st_age = rowdata.find("td:nth-child(5)").html();
+           $('#eage').val(st_age);
+           let st_url = rowdata.find("td:nth-child(2)").html();
+           $('#eurl').val(st_url);
+        });
+
+
+        //------------Update Button Functionality---------------//
+
+        $(".tupdate").click(function(event)
+        {
+             event.preventDefault();
+          
+             rowdata.find("td:nth-child(1)").html($("#eid").val());
+             rowdata.find("td:nth-child(3)").html($("#ename").val());
+             rowdata.find("td:nth-child(4)").html($("#esalary").val());
+             rowdata.find("td:nth-child(5)").html($("#eage").val());
+             rowdata.find("td:nth-child(2)").html($("#eurl").val());
+        });
+
+        });    
+    </script>
+
+  
+
+
+</head>
+<body>
+    <h1>Employee Form</h1>
+    <div>
+        <form>
+            <label for="eid">Employee ID</label>
+            <input type="text" id="eid"><br><br>
+            <label for="ename">Employee Name</label>
+            <input type="text" id="ename"><br><br>
+            <label for="esalary">Employee Salary</label>
+            <input type="text" id="esalary"> <br><br>
+            <label for="eage">Employee Age</label>
+            <input type="text" id="eage"><br><br>
+            <label for="eurl">Employee Image Url</label>
+            <input type="text" id="eurl"><br><br>
+            <input type="submit" id="ebutton">&nbsp; &nbsp;
+            <button class ="tupdate">Update</button>
+        </form>
+    </div>
+
+    <br><br>
+
+    <div>
+        <table border="1px">
+            <tr>
+                <th>S.No</th>
+                <th>Image</th>
+                <th>Emp_name</th>
+                <th>Salary</th>
+                <th>Age</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td><img src="/images/nicepage.jpg" alt="imagenice" width="50px"></td>
+                <td>Prince</td>
+                <td>40000</td>
+                <td>20</td>
+                <td><button class = "edt">Edit</button>&nbsp;<button class="del">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+</html>
